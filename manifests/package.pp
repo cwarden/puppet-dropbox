@@ -6,6 +6,7 @@ class dropbox::package {
   $download_arch = $::architecture ? {
     'i386'   => 'x86',
     'x86_64' => 'x86_64',
+    'amd64'  => 'x86_64',
   }
 
   user { $dropbox::config::dx_uid:
