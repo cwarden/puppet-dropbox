@@ -31,9 +31,15 @@ try {
 	dropboxdProcess.stdout.on('data', function(data) {
 		var resultString = String(data);
 		if (typeof hostId === 'undefined') {
-			var match = /host_id=(.*?)&/.exec(resultString);
+			var match = /host_id=(.*?)[&|]/.exec(resultString);
 			if (!match) {
-				die('Unexpected output: ' + resultString);
+				if (resultString == 'This client is not linked to any account...') {
+					// we didn't receive the host_id in the `data`. Try again.
+					return;
+				}
+				else {
+					die('Unexpected output: ' + resultString);
+				}
 			}
 			hostId = match[1];
 			console.log('Retrieved host_id, starting login procedure');
