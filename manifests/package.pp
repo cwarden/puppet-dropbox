@@ -9,17 +9,19 @@ class dropbox::package {
     'amd64'  => 'x86_64',
   }
 
-  user { $dropbox::config::dx_uid:
-    ensure     => present,
-    gid        => $dropbox::config::dx_gid,
-    managehome => true,
-    system     => true,
-    home       => $dropbox::config::dx_home,
-    comment    => 'Dropbox Service Account',
-  }
-  group { $dropbox::config::dx_gid:
-    ensure => present,
-    system => true
+  if ($dropbox::config::create_user){
+    user { $dropbox::config::dx_uid:
+      ensure     => present,
+      gid        => $dropbox::config::dx_gid,
+      managehome => true,
+      system     => true,
+      home       => $dropbox::config::dx_home,
+      comment    => 'Dropbox Service Account',
+    }
+    group { $dropbox::config::dx_gid:
+      ensure => present,
+      system => true
+    }
   }
 
   exec { 'download-dropbox-cli':
