@@ -31,7 +31,7 @@ try {
 	dropboxdProcess.stdout.on('data', function(data) {
 		var resultString = String(data);
 		if (typeof hostId === 'undefined') {
-			var match = /host_id=(.*?)&/.exec(resultString);
+			var match = /host_id=([^ ]*)/.exec(resultString);
 			if (!match) {
 				die('Unexpected output: ' + resultString);
 			}
