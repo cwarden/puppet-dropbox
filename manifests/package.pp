@@ -63,7 +63,7 @@ class dropbox::package {
     }
 
     exec { 'authorize-dropbox-user':
-      command => "node ${dropbox::config::dx_home}/authorize.js ${dropbox::config::user} ${dropbox::config::password}",
+      command => "${dropbox::config::dx_node} ${dropbox::config::dx_home}/authorize.js ${dropbox::config::user} ${dropbox::config::password}",
       user    => $dropbox::config::dx_uid,
       group   => $dropbox::config::dx_gid,
       cwd     => $dropbox::config::dx_home,
